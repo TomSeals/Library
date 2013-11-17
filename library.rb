@@ -3,9 +3,7 @@ class Library
     @books = []
   end
 
-  def books
-    @books
-  end
+  attr_reader :books
 
   def list_books
     @books.each do |book|
@@ -67,13 +65,9 @@ class Borrower
     @name = name
   end
 
-  def borrowed_books
-    @borrowed_books
-  end
-
-  def name
-    @name
-  end
+  attr_reader :borrowed_books
+   
+  attr_reader :name
 
   def borrowed_books_count
     @borrowed_books.length
@@ -95,27 +89,13 @@ class Book
     @borrower = nil
   end
 
-  def author
-    @author
-  end
+  attr_reader :author
 
-  def borrower
-    @borrower
-  end
+  attr_accessor :borrower
 
-  def borrower=(new_value)
-    @borrower = new_value
-  end
+  attr_reader :status
 
-  def status
-    @status
-  end
+  attr_writer :status
 
-  def status=(new_value)
-    @status = new_value
-  end
-
-  def title
-    @title
-  end
+  attr_reader :title
 end
