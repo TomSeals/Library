@@ -9,7 +9,7 @@ class Library
 
   def list_books
     @books.each do |book|
-      puts "#{book.title}, by #{book.author}, is #{book.status}"
+      puts "#{book.title} by #{book.author} is #{book.status}"
     end
   end
 
@@ -33,29 +33,30 @@ class Library
     unless @books.include?(book)
       @books << book
     else
-      puts "This book has already been added to the library."
+      puts "This book has already been added"
     end
   end
 
-def check_out(user, book)
-    if user.borrowed_books_count >= 2
-      return "Sorry, that user already has two books"
+  def check_out(user, book)
+    if book.status != "available"
+      return "Sorry that book is not available"
     end
 
-    if book.status == "available"
+    if user.borrowed_books_count < 2
+      user.borrowed_books << book
       book.borrower = user
       book.status = "checked out"
     else
-      return "Sorry, this book is not available"
+      "This user currently has too many books. Please return books to check out again."
     end
-end
+  end
 
   def check_in(book)
     if book.status == "checked out"
       book.borrower = nil
       book.status = "available"
     else
-      "That book is not checked out from this library."
+      "This book is not available."
     end
   end
 end
@@ -86,6 +87,7 @@ class Borrower
 end
 
 class Book
+  # books should be able to have info saved about them
   def initialize(title, author)
     @title = title
     @author = author
@@ -95,10 +97,6 @@ class Book
 
   def author
     @author
-  end
-
-  def title
-    @title
   end
 
   def borrower
@@ -115,5 +113,9 @@ class Book
 
   def status=(new_value)
     @status = new_value
+  end
+
+  def title
+    @title
   end
 end
